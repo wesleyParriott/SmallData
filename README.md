@@ -29,7 +29,6 @@ $ go build
 $ ./cli
 ```
 ### Usage
-MAIN
 exit: exits out of the cli.
 
 help: prints this helpful message.
@@ -51,7 +50,6 @@ print : prints out the hash table and all it's values
 
 stats : prints the max amount of entries and current amount of entries
 
-UTIL
 byte_me: returns the go based array of bytes of a given string
 
 hash_me: returns a hashed value based on the string given
