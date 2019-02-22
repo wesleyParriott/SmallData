@@ -1,6 +1,7 @@
 package SmallData
 
 import (
+	_ "fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -75,22 +76,24 @@ func NewTable(size int) *HashTable {
 	return ht
 }
 
-// NewTable from file returns a New Hash table based on a dump file given
-// it will be the size of the file
-func NewTableFromFile(fileName string) *HashTable {
-	ht := new(HashTable)
-
-	ht.FileName = fileName
-
+// NewTable from file returns a New Hash table based on a dump file given it will be the size of the file.
+// If the file cannot be found a clean table will be produced with the default size given.
+func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 	filePath := "./" + fileName
+
 	f, err := os.Open(filePath)
 	if err != nil {
 		log.Printf("Warning When trying to open dump file: %s", err)
 
-		size := 1024
-		log.Printf("INFO Now loading file with size: %d bytes\n", size)
-		return NewTable(size)
+		log.Printf("INFO Now loading file with default size: %d bytes\n", defaultSize)
+		ht := NewTable(defaultSize)
+		ht.FileName = filePath
+
+		return ht
 	}
+
+	ht := new(HashTable)
+	ht.FileName = filePath
 
 	fileInfo, err := f.Stat()
 	if err != nil {

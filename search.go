@@ -35,3 +35,15 @@ func (ht *HashTable) SearchString(k string) string {
 
 	return string(dat.Value)
 }
+
+// SearchString searchs for the string Value of the given string Hashed Key Int
+func (ht *HashTable) SearchKey(k int) string {
+	dat := search(ht, k)
+
+	if dat == nil {
+		log.Printf("[Warning] value for key: %s not found", k)
+		return ""
+	}
+
+	return string(dat.Value)
+}

@@ -41,6 +41,7 @@ Small Data: a tiny hash table cli
     byte_me: returns the go based array of bytes of a given string  
 
     hash_me: returns a hashed value based on the string given
+
 `
 
 func fatalOnError(err error) {
@@ -93,22 +94,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	var htv *SmallData.HashTable
 
-	fileName := "dat/smeg.dat"
-
-	// SmallData doesn't look for the dump file
-	// the usage code has to look and make sure it's correct
-	// I don't know if this is how it should be
-	f, err := os.Open(fileName)
-	if err != nil {
-		log.Printf("WARNING When trying to open dump file: %s", err)
-		log.Printf("INFO getting empty table with size of: %d", 8)
-
-		htv = SmallData.NewTable(8)
-	} else {
-		f.Close()
-
-		htv = SmallData.NewTableFromFile(fileName)
-	}
+	htv = SmallData.NewTableFromFile("dat/smeg.dat", 8)
 
 LOOP:
 	for {

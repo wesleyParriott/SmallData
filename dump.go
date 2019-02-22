@@ -1,11 +1,13 @@
 package SmallData
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strconv"
 )
 
+// TODO: INDEX OUT OF RANGE if file is empty
 func loadData(stream []byte, ht *HashTable) {
 	index := 1
 	for {
@@ -44,16 +46,19 @@ func loadData(stream []byte, ht *HashTable) {
 // Dump dumps the contents of the table into a file
 // the name of the dump file is determined by the name given
 // upon intialization of the hashtable
-func (ht HashTable) Dump() {
+func (ht *HashTable) Dump() {
 	if ht.CurrentEntries == 0 {
 		log.Print("ERROR not dumping because there's nothing to dump!")
 		return
 	}
 
 	fileName := ht.FileName
+	fmt.Println(fileName)
+	fmt.Println(ht.FileName)
+	fmt.Println(ht.CurrentEntries)
 	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 777)
 	if err != nil {
-		log.Printf("WARNING couldn't open the file for dumping because: %s", err)
+		log.Printf("WARNING (when dumping) %s", err)
 		return
 	}
 
