@@ -40,6 +40,42 @@ type packedInfo struct {
 	value       []byte
 }
 
+// TODO: INDEX OUT OF RANGE if file is empty
+func loadData(stream []byte, ht *HashTable) {
+	index := 1
+	for {
+		if index >= len(stream) {
+			break
+		}
+		khsb := stream[index]
+		if khsb == '\x00' {
+			// the cases where there's
+			// uninitialized hashtable data inserted
+			// because the whole thing wasn't filled up yet
+			index++
+			continue
+		}
+		khs := int(khsb)
+		index++
+
+		vs := int(stream[index])
+		index++
+
+		kh := stream[index:(khs + index)]
+		index += khs
+
+		v := stream[index:(vs + index)]
+		index += vs
+
+		key, err := strconv.Atoi(string(kh))
+		if err != nil {
+			// that's pretty baaaaaad if this happens
+			log.Fatalf("Error when loading data: %s", err)
+		}
+		insert(ht, key, v)
+	}
+}
+
 func packData(h HashTableData) packedInfo {
 	var pki packedInfo
 

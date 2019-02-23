@@ -23,8 +23,12 @@ Small Data: a tiny hash table cli
     insert: inserts into the hash table
             Example: $> insert key_name value [value...] 
 
-    search: searchs for a value in the hash table based on a key
-            Example: $> search key
+    search:     searchs for a value in the hash table based on a given string
+            Example: $> search some_key
+            Return : $> value... 
+
+    search_key: searchs for a value in the hash table based on a key
+            Example: $> search_key 42402122
             Return : $> value... 
 
     remove: removes a key and its associated value from the hash table
@@ -143,6 +147,22 @@ LOOP:
 			//  we should then get a value back from the database
 			key := inputs[1]
 			value := htv.SearchString(key)
+			fmt.Println(value)
+		case "search_key":
+			if len(inputs) < 2 {
+				log.Printf("improper amount of search parameters given. Example: insert key_name")
+			}
+			// $> search_key 1045563120
+			// it's space delimited making it thus:
+			//  // [search,1045563120]
+			//  // command = [0] search_key
+			//  // key     = [1] 1045563120
+			//  we should then get a value back from the database
+			key, err := strconv.Atoi((inputs[1]))
+			if err != nil {
+				log.Fatalf("FATAL couldn't convert key to int: %d", input[1])
+			}
+			value := htv.SearchKey(key)
 			fmt.Println(value)
 		case "remove":
 			if len(inputs) < 2 {

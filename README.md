@@ -40,6 +40,10 @@ search: searchs for a value in the hash table based on a key
         Example: $> search key
         Return : $> value...
 
+search_key: searchs for a value in the hash table based on a key
+        Example: $> search_key 42402122
+        Return : $> value... 
+
 remove: removes a key and its associated value from the hash table
         Example: $> remove key
 
