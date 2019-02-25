@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+// TODO: 
+//      batch inserts
+//      remove by hashed key
+
 func insert(hashTable *HashTable, k int, v []byte) error {
 
 	if hashTable.CurrentEntries >= maxTableSize {
@@ -47,6 +51,8 @@ func (ht *HashTable) StoreBytes(key []byte, value []byte) error {
 	return insert(ht, hashString(string(key)), value)
 }
 
+// TODO evaluate how useful it is to utilize the returning of the hash key
+//      along with how useful this function even is
 func (ht *HashTable) StoreBytesWithTimeStamp(input []byte) (int, error) {
 	t := time.Now().UTC()
 	hashed := hashString(t.String())

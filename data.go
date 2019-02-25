@@ -22,7 +22,8 @@ type HashTableData struct {
 	Value []byte
 }
 
-// HashTable is the data structure for the HashTable itself which is the array of HashTableData
+// HashTable is the data structure for the HashTable itself
+// which holds the array of HashTableData, the current entry count, the max table size, and the dump file name
 type HashTable struct {
 	Table []HashTableData
 
@@ -119,14 +120,17 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 
 	f, err := os.Open(filePath)
 	if err != nil {
-		log.Printf("Warning When trying to open dump file: %s", err)
+		log.Printf("WARNING When trying to open dump file: %s", err)
 
 		log.Printf("INFO Now loading file with default size: %d bytes\n", defaultSize)
 		ht := NewTable(defaultSize)
 		ht.FileName = filePath
 
+        f.Close()
+
 		return ht
 	}
+    defer f.Close()
 
 	ht := new(HashTable)
 	ht.FileName = filePath

@@ -24,6 +24,7 @@ func (ht *HashTable) Dump() {
 		log.Printf("WARNING (when dumping) %s", err)
 		return
 	}
+    defer f.Close()
 
 	maxTableSizeBuff := make([]byte, 1)
 	maxTableSizeBuff[0] = byte(ht.MaxTableSize)

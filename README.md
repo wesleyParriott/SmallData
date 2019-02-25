@@ -34,22 +34,32 @@ exit: exits out of the cli.
 help: prints this helpful message.
 
 insert: inserts into the hash table
+
         Example: $> insert key_name value [value...]
 
+
 search: searchs for a value in the hash table based on a key
+
         Example: $> search key
+
         Return : $> value...
 
 search_key: searchs for a value in the hash table based on a key
+
         Example: $> search_key 42402122
+
         Return : $> value... 
 
+
 remove: removes a key and its associated value from the hash table
+
         Example: $> remove key
 
 dump  : dumps to a config based file (default is dump.dat)
 
+
 print : prints out the hash table and all it's values
+
         NOTE: 0's are null values in the hash table
 
 stats : prints the max amount of entries and current amount of entries
@@ -60,19 +70,22 @@ hash_me: returns a hashed value based on the string given
 
 ## Tests
 
+The testing is currently only in a happy path state. These tests are meant for regression testing for a continous
+integreation tool. All the tests are located in SmallData_test.go.
+
 To run all the tests:
 
 ```
 go test -v 
 ```
 
-### TestCollisions
+### TestCoverage
+
+Test coverage as of now is 80.2% according to 
 
 ```
-go test -v TestCollisions
+go test -cover 
 ```
-
-This test creates a table of a low size and prints out the contents of the table for visual insepection.
 
 ## License
 

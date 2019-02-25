@@ -42,7 +42,7 @@ func (ht *HashTable) SearchKey(k int) string {
 	dat := search(ht, k)
 
 	if dat == nil {
-		log.Printf("[Warning] value for key: %s not found", k)
+		log.Printf("[Warning] value for key: %d not found", k)
 		return ""
 	}
 
