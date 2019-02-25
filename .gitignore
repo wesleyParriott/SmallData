@@ -32,4 +32,4 @@ tags
 [._]*.un~
 
 # Data from the example cli 
-./cmd/cli/dat/*
+cmd/cli/dat/*
