@@ -49,13 +49,17 @@ func (ht *HashTable) Dump() {
 		buffIndex := 2
 
 		for i := 0; i < int(dat.keyHashSize); i++ {
-			// TODO add fail safes
+            if i > len(buff) {
+                break
+            }
 			buff[buffIndex] = dat.keyHash[i]
 			buffIndex++
 		}
 
 		for i := 0; i < int(dat.valueSize); i++ {
-			// TODO add fail safes
+            if i > len(buff) {
+                break
+            }
 			buff[buffIndex] = dat.value[i]
 			buffIndex++
 		}

@@ -34,15 +34,19 @@ type HashTable struct {
 }
 
 type packedInfo struct {
-	// TODO timestamp [64]byte
 	keyHash     []byte // int32
 	keyHashSize byte
 	valueSize   byte // int32
 	value       []byte
 }
 
-// TODO: INDEX OUT OF RANGE if file is empty
 func loadData(stream []byte, ht *HashTable) {
+    // early out in case of an empty stream
+    if len(stream) == 0 {
+        log.Print("WARNING stream was empty. Not loading data")
+        return
+    }
+
 	index := 1
 	for {
 		if index >= len(stream) {

@@ -51,9 +51,9 @@ func (ht *HashTable) StoreBytes(key []byte, value []byte) error {
 	return insert(ht, hashString(string(key)), value)
 }
 
-// TODO evaluate how useful it is to utilize the returning of the hash key
-//      along with how useful this function even is
 func (ht *HashTable) StoreBytesWithTimeStamp(input []byte) (int, error) {
+    // NOTE I'm not sure how useful it is to utilize the returning of the hash key
+    //      along with how useful this function even is
 	t := time.Now().UTC()
 	hashed := hashString(t.String())
 	err := insert(ht, hashed, input)
