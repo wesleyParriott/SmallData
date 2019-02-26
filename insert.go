@@ -43,14 +43,18 @@ func insert(hashTable *HashTable, k int, v []byte) error {
 	return nil
 }
 
+// StoreString stores the a given value into the table index by a hash created by the given key
 func (ht *HashTable) StoreString(key string, value string) error {
 	return insert(ht, hashString(string(key)), []byte(value))
 }
 
+// StoreBytes is the same as StoreString but use type []byte for the key and value
 func (ht *HashTable) StoreBytes(key []byte, value []byte) error {
 	return insert(ht, hashString(string(key)), value)
 }
 
+// StoreBytesWithTimeStamp will use time of storage to create a hash key and will store the given byte array
+// it will then return the hashed integer value for searching later on
 func (ht *HashTable) StoreBytesWithTimeStamp(input []byte) (int, error) {
     // NOTE I'm not sure how useful it is to utilize the returning of the hash key
     //      along with how useful this function even is
