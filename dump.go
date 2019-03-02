@@ -1,7 +1,6 @@
 package SmallData
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
@@ -16,9 +15,6 @@ func (ht *HashTable) Dump() {
 	}
 
 	fileName := ht.FileName
-	fmt.Println(fileName)
-	fmt.Println(ht.FileName)
-	fmt.Println(ht.CurrentEntries)
 	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 777)
 	if err != nil {
 		log.Printf("WARNING (when dumping) %s", err)
