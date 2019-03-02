@@ -10,10 +10,34 @@ SmallData.NewTable(1024)
 key   := "some key"
 value := "some value"
 err := htv.StoreString(key, value)
+if err != nil {
+    // handle err...
+}
 
-value := htv.SearchString(key)
-fmt.Println(value)
+ret := htv.SearchString(key)
+fmt.Println(ret)
 // $> some value
+```
+
+The way collisions are handled is a set of semi-colon delimited values.
+
+```Golang 
+key := "some_key"
+value01 := "some value"
+value02 := "some other value"
+
+err := htv.StoreString(key, value01)
+if err != nil {
+    // handle err ...
+}
+err := htv.StoreString(key, value02)
+if err != nil {
+    // handle err ...
+}
+
+ret := htv.SearchString(key)
+fmt.Println(ret)
+// $> some value;some other value
 ```
 
 # Example Programs
