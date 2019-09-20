@@ -98,7 +98,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	var htv *SmallData.HashTable
 
-	htv = SmallData.NewTableFromFile("test_data.dat", 8)
+	htv = SmallData.NewTableFromFile("test_data.dat", 255)
 
 LOOP:
 	for {

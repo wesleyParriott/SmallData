@@ -1,7 +1,6 @@
 package SmallData
 
 import (
-	"log"
 	"os"
 )
 
@@ -10,14 +9,14 @@ import (
 // upon intialization of the hashtable
 func (ht *HashTable) Dump() {
 	if ht.CurrentEntries == 0 {
-		log.Print("ERROR not dumping because there's nothing to dump!")
+		warning("error: not dumping because there's nothing to dump!")
 		return
 	}
 
 	fileName := ht.FileName
 	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 777)
 	if err != nil {
-		log.Printf("WARNING (when dumping) %s", err)
+		warningf("error when dumping: %s", err)
 		return
 	}
     defer f.Close()
@@ -26,7 +25,7 @@ func (ht *HashTable) Dump() {
 	maxTableSizeBuff[0] = byte(ht.MaxTableSize)
 	_, err = f.Write(maxTableSizeBuff)
 	if err != nil {
-		log.Printf("WARNING Not dumping contents because couldn't write maxTable data: %s", err)
+		warningf("WARNING Not dumping contents because couldn't write maxTable data: %s", err)
 		return
 	}
 	for i := 0; i < ht.MaxTableSize; i++ {
@@ -62,7 +61,7 @@ func (ht *HashTable) Dump() {
 
 		_, err := f.Write(buff)
 		if err != nil {
-			log.Printf("WARNING breaking out of loop")
+			warning("breaking out of loop")
 			break
 		}
 	}

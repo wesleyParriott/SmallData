@@ -30,5 +30,5 @@ func (ht HashTable) Print() {
 }
 
 func (ht HashTable) Stats() {
-	fmt.Printf("Max Entries: %d\nCurrent Entries:%d\n", ht.MaxTableSize, ht.CurrentEntries)
+	debugf("Max Entries: %d\nCurrent Entries:%d\n", ht.MaxTableSize, ht.CurrentEntries)
 }

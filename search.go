@@ -1,9 +1,5 @@
 package SmallData
 
-import (
-	"log"
-)
-
 func search(hashTable *HashTable, k int) *HashTableData {
 	index := hashCode(k)
 
@@ -29,7 +25,7 @@ func (ht *HashTable) SearchString(k string) string {
 	dat := ht.SearchForData(hashString(k))
 
 	if dat == nil {
-		log.Printf("[Warning] value for key: %s not found", k)
+		warningf("value for key: %s not found", k)
 		return ""
 	}
 
@@ -42,7 +38,7 @@ func (ht *HashTable) SearchKey(k int) string {
 	dat := search(ht, k)
 
 	if dat == nil {
-		log.Printf("[Warning] value for key: %d not found", k)
+		warningf("value for key: %d not found", k)
 		return ""
 	}
 

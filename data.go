@@ -1,9 +1,7 @@
 package SmallData
 
 import (
-	_ "fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"strconv"
 )
@@ -43,7 +41,7 @@ type packedInfo struct {
 func loadData(stream []byte, ht *HashTable) {
     // early out in case of an empty stream
     if len(stream) == 0 {
-        log.Print("WARNING stream was empty. Not loading data")
+        warning("stream was empty. Not loading data")
         return
     }
 
@@ -75,7 +73,7 @@ func loadData(stream []byte, ht *HashTable) {
 		key, err := strconv.Atoi(string(kh))
 		if err != nil {
 			// that's pretty baaaaaad if this happens
-			log.Fatalf("Error when loading data: %s", err)
+			fatalf("Error when loading data: %s", err)
 		}
 		insert(ht, key, v)
 	}
@@ -85,7 +83,7 @@ func packData(h HashTableData) packedInfo {
 	var pki packedInfo
 
 	if h.Key < 0 {
-		log.Printf("WARNING trying to pack a HashTableData with a negitive key value!")
+		warning("WARNING trying to pack a HashTableData with a negitive key value!")
 		return pki
 	}
 
@@ -124,9 +122,9 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 
 	f, err := os.Open(filePath)
 	if err != nil {
-		log.Printf("WARNING When trying to open dump file: %s", err)
+		warningf("When trying to open dump file: %s", err)
 
-		log.Printf("INFO Now loading file with default size: %d bytes\n", defaultSize)
+		infof("Now loading file with default size: %d bytes\n", defaultSize)
 		ht := NewTable(defaultSize)
 		ht.FileName = filePath
 
@@ -141,19 +139,22 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 
 	fileInfo, err := f.Stat()
 	if err != nil {
-		log.Printf("WARNING When trying to open dump file: %s", err)
+		warningf("When trying to open dump file: %s", err)
 		return ht
 	}
 	fileSize := int(fileInfo.Size())
 
 	fileContents, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		log.Fatalf("FATAL When trying to get dump file contents: %s", err)
+		fatalf("When trying to get dump file contents: %s", err)
 	}
 
 	size := int(fileContents[0])
+    if size <= 0 {
+        fatalf("Size of Hash table from file %s is an invalid size. The size found was %d" , fileName, size);
+    }
 
-	log.Printf("INFO loaded file with size: %d max entries\n", size)
+	infof("loaded file with size: %d max entries\n", size)
 
 	ht.Table = make([]HashTableData, size)
 	ht.MaxTableSize = size
@@ -162,10 +163,10 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 	stream := make([]byte, fileSize)
 	n, err := f.Read(stream)
 	if err != nil {
-		log.Printf("WARNING When trying to read dump file: %s", err)
+		warningf("When trying to read dump file: %s", err)
 		return ht
 	}
-	log.Printf("INFO %d bytes read from dump file", n)
+	infof("%d bytes read from dump file", n)
 	loadData(stream, ht)
 
 	return ht
