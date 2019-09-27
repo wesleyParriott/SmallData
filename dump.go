@@ -9,9 +9,15 @@ import (
 // upon intialization of the hashtable
 func (ht *HashTable) Dump() {
 	if ht.CurrentEntries == 0 {
-		warning("error: not dumping because there's nothing to dump!")
+		warning("Not dumping because there's nothing to dump!")
 		return
 	}
+
+    totalSize := byte(ht.MaxTableSize)
+    if totalSize == 0 {
+		warningf("Not dumping the contents of the table because the size %d is larger than 255 bytes!", ht.MaxTableSize)
+        return
+    }
 
 	fileName := ht.FileName
 	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 777)
@@ -22,10 +28,10 @@ func (ht *HashTable) Dump() {
     defer f.Close()
 
 	maxTableSizeBuff := make([]byte, 1)
-	maxTableSizeBuff[0] = byte(ht.MaxTableSize)
+	maxTableSizeBuff[0] = totalSize
 	_, err = f.Write(maxTableSizeBuff)
 	if err != nil {
-		warningf("WARNING Not dumping contents because couldn't write maxTable data: %s", err)
+		warningf("Not dumping contents because couldn't write maxTable data: %s", err)
 		return
 	}
 	for i := 0; i < ht.MaxTableSize; i++ {

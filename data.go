@@ -118,6 +118,10 @@ func NewTable(size int) *HashTable {
 // NewTable from file returns a New Hash table based on a dump file given it will be the size of the file.
 // If the file cannot be found a clean table will be produced with the default size given.
 func NewTableFromFile(fileName string, defaultSize int) *HashTable {
+    if defaultSize > 255 {
+        fatalf("Default size cannont be larger than 255 bytes. Recieved a default size of %d", defaultSize)
+    }
+
 	filePath := "./" + fileName
 
 	f, err := os.Open(filePath)
@@ -142,7 +146,12 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 		warningf("When trying to open dump file: %s", err)
 		return ht
 	}
+    // NOTE: I think file size is a bad name here. Because it's the 
+    //       it's the table size given from the file read into the program
 	fileSize := int(fileInfo.Size())
+    if fileSize == 0 {
+        fatalf("the file size of the given file %s was 0!", filePath)
+    }
 
 	fileContents, err := ioutil.ReadFile(filePath)
 	if err != nil {
