@@ -53,12 +53,20 @@ func TestNewTableFromAFile(t *testing.T) {
 	nominalTestTableSize := 8
 	nominalFileName := "test_data.dat"
 
+	f, err := os.Open(nominalFileName)
+	if err != nil {
+		f.Close()
+		t.Fatalf("./%s does not exist. This test needs that file in order to run. To get that file use the cmd/cli/", nominalFileName)
+	}
+	f.Close()
+
 	testHT := NewTableFromFile(nominalFileName, nominalTestTableSize)
 
 	if testHT.FileName != ("./" + nominalFileName) {
 		t.Fatalf("nominal test file name [%s] and name found [%s]wasn't the same", testHT.FileName, nominalFileName)
 	}
 
+	t.Log(nominalFileName)
 	t.Logf("PageSize %d", os.Getpagesize())
 	t.Logf("Hash List Nominal Size  %d hash tables", nominalTestTableSize)
 	t.Logf("Hash List Size in bytes %d bytes", unsafe.Sizeof(testHT.Table))
