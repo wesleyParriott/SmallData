@@ -13,11 +13,11 @@ func (ht *HashTable) Dump() {
 		return
 	}
 
-    totalSize := byte(ht.MaxTableSize)
-    if totalSize == 0 {
+	totalSize := byte(ht.MaxTableSize)
+	if totalSize == 0 {
 		warningf("Not dumping the contents of the table because the size %d is larger than 255 bytes!", ht.MaxTableSize)
-        return
-    }
+		return
+	}
 
 	fileName := ht.FileName
 	f, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 777)
@@ -25,7 +25,7 @@ func (ht *HashTable) Dump() {
 		warningf("error when dumping: %s", err)
 		return
 	}
-    defer f.Close()
+	defer f.Close()
 
 	maxTableSizeBuff := make([]byte, 1)
 	maxTableSizeBuff[0] = totalSize
@@ -50,17 +50,17 @@ func (ht *HashTable) Dump() {
 		buffIndex := 2
 
 		for i := 0; i < int(dat.keyHashSize); i++ {
-            if i > len(buff) {
-                break
-            }
+			if i > len(buff) {
+				break
+			}
 			buff[buffIndex] = dat.keyHash[i]
 			buffIndex++
 		}
 
 		for i := 0; i < int(dat.valueSize); i++ {
-            if i > len(buff) {
-                break
-            }
+			if i > len(buff) {
+				break
+			}
 			buff[buffIndex] = dat.value[i]
 			buffIndex++
 		}

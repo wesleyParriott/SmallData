@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-// TODO: 
+// TODO:
 //      batch inserts
 //      remove by hashed key
 
@@ -56,8 +56,8 @@ func (ht *HashTable) StoreBytes(key []byte, value []byte) error {
 // StoreBytesWithTimeStamp will use time of storage to create a hash key and will store the given byte array
 // it will then return the hashed integer value for searching later on
 func (ht *HashTable) StoreBytesWithTimeStamp(input []byte) (int, error) {
-    // NOTE I'm not sure how useful it is to utilize the returning of the hash key
-    //      along with how useful this function even is
+	// NOTE I'm not sure how useful it is to utilize the returning of the hash key
+	//      along with how useful this function even is
 	t := time.Now().UTC()
 	hashed := hashString(t.String())
 	err := insert(ht, hashed, input)

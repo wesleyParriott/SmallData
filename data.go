@@ -39,11 +39,11 @@ type packedInfo struct {
 }
 
 func loadData(stream []byte, ht *HashTable) {
-    // early out in case of an empty stream
-    if len(stream) == 0 {
-        warning("stream was empty. Not loading data")
-        return
-    }
+	// early out in case of an empty stream
+	if len(stream) == 0 {
+		warning("stream was empty. Not loading data")
+		return
+	}
 
 	index := 1
 	for {
@@ -118,9 +118,9 @@ func NewTable(size int) *HashTable {
 // NewTable from file returns a New Hash table based on a dump file given it will be the size of the file.
 // If the file cannot be found a clean table will be produced with the default size given.
 func NewTableFromFile(fileName string, defaultSize int) *HashTable {
-    if defaultSize > 255 {
-        fatalf("Default size cannont be larger than 255 bytes. Recieved a default size of %d", defaultSize)
-    }
+	if defaultSize > 255 {
+		fatalf("Default size cannont be larger than 255 bytes. Recieved a default size of %d", defaultSize)
+	}
 
 	filePath := "./" + fileName
 
@@ -132,11 +132,11 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 		ht := NewTable(defaultSize)
 		ht.FileName = filePath
 
-        f.Close()
+		f.Close()
 
 		return ht
 	}
-    defer f.Close()
+	defer f.Close()
 
 	ht := new(HashTable)
 	ht.FileName = filePath
@@ -146,12 +146,12 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 		warningf("When trying to open dump file: %s", err)
 		return ht
 	}
-    // NOTE: I think file size is a bad name here. Because it's the 
-    //       it's the table size given from the file read into the program
+	// NOTE: I think file size is a bad name here. Because it's the
+	//       it's the table size given from the file read into the program
 	fileSize := int(fileInfo.Size())
-    if fileSize == 0 {
-        fatalf("the file size of the given file %s was 0!", filePath)
-    }
+	if fileSize == 0 {
+		fatalf("the file size of the given file %s was 0!", filePath)
+	}
 
 	fileContents, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -159,9 +159,9 @@ func NewTableFromFile(fileName string, defaultSize int) *HashTable {
 	}
 
 	size := int(fileContents[0])
-    if size <= 0 {
-        fatalf("Size of Hash table from file %s is an invalid size. The size found was %d" , fileName, size);
-    }
+	if size <= 0 {
+		fatalf("Size of Hash table from file %s is an invalid size. The size found was %d", fileName, size)
+	}
 
 	infof("loaded file with size: %d max entries\n", size)
 
