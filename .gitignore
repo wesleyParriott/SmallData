@@ -33,3 +33,4 @@ tags
 
 # Data from the example cli 
 cmd/cli/dat/*
+cmd/cli/cli
